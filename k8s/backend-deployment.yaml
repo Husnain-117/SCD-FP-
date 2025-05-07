@@ -1,3 +1,4 @@
+# Backend deployment configuration for SCD FP application
 apiVersion: apps/v1
 kind: Deployment
 metadata:
