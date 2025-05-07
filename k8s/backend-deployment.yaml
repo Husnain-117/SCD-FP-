@@ -1,4 +1,5 @@
 # Backend deployment configuration for SCD FP application
+# This is a test change to trigger the GitHub Actions workflow
 apiVersion: apps/v1
 kind: Deployment
 metadata:
