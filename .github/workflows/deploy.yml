@@ -3,7 +3,7 @@ name: Build and Deploy to Minikube
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build-deploy:
@@ -37,7 +37,14 @@ jobs:
 
     - name: Deploy to Minikube
       run: |
-        kubectl apply -f k8s/
+        kubectl apply -f k8s/backend-deployment.yaml
+        kubectl apply -f k8s/backend-config.yaml
+        kubectl apply -f k8s/frontend-deployment.yaml
+        kubectl apply -f k8s/frontend-configmap.yaml
+        kubectl apply -f k8s/mongodb-deployment.yaml
+        kubectl apply -f k8s/mongodb-pvc.yaml
+        kubectl apply -f k8s/mongodb-secrets.yaml
+        kubectl apply -f k8s/mongodb-service.yaml
 
     - name: Verify Deployment
       run: |
