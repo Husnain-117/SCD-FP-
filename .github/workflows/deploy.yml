@@ -12,17 +12,22 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        path: project
 
     - name: Set up Docker to use Minikube's environment
+      working-directory: project
       run: |
         echo "Configuring Docker to use Minikube's daemon..."
         eval $(minikube docker-env)
 
     - name: Build Backend Docker image
+      working-directory: project
       run: |
         docker build -t husnain117/scdfp-backend:latest -f backend/Dockerfile .
 
     - name: Build Frontend Docker image
+      working-directory: project
       run: |
         docker build -t husnain117/scdfp-frontend:latest -f frontend/Dockerfile .
 
@@ -36,6 +41,7 @@ jobs:
       run: docker push husnain117/scdfp-frontend:latest
 
     - name: Deploy to Minikube
+      working-directory: project
       run: |
         kubectl apply -f k8s/backend-deployment.yaml
         kubectl apply -f k8s/backend-config.yaml
@@ -47,6 +53,7 @@ jobs:
         kubectl apply -f k8s/mongodb-service.yaml
 
     - name: Verify Deployment
+      working-directory: project
       run: |
         echo "Checking pods..."
         kubectl get pods -n scd-fp
